@@ -1,17 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
+    <!-- Tác dụng: Xác định đây là project Web API -->
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
+        <!-- Tác dụng: Cho phép ứng dụng chạy trên nền tảng .NET 6.0 -->
+
         <Nullable>enable</Nullable>
+        <!-- Tác dụng: Giúp phát hiện và ngăn chặn lỗi null trong quá trình code -->
+
         <ImplicitUsings>enable</ImplicitUsings>
+        <!-- Tác dụng: Giảm thiểu việc phải khai báo using, code ngắn gọn hơn -->
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+        <!-- Tác dụng: Tạo giao diện để test API và tạo documentation tự động -->
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj" />
+        <ProjectReference Include="..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj" />
+        <!-- Tác dụng: Thêm chức năng logging vào project -->
     </ItemGroup>
 
 </Project>

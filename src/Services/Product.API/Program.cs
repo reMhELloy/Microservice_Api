@@ -1,43 +1,42 @@
+// Import các namespace cần thiết
 using Common.Logging;
+using Product.API.Extensions;
 using Serilog;
 
+// Khởi tạo builder cho web application
 var builder = WebApplication.CreateBuilder(args);
-builder.Host.UseSerilog(Serilogger.Configure);
 
+// Log thông tin bắt đầu khởi động API
 Log.Information("Start Product API up");
 
 try
 {
-    // Add services to the container.
+   // Cấu hình logging sử dụng Serilog
+   builder.Host.UseSerilog(Serilogger.Configure);
 
-    builder.Services.AddControllers();
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+   // Thêm cấu hình từ appsettings.json và biến môi trường
+   builder.Host.AddAppConfigurations();
 
-    var app = builder.Build();
+   // Đăng ký các service cần thiết (Controllers, Swagger, etc)
+   builder.Services.AddInfrastructure();
+  
+   // Build ứng dụng
+   var app = builder.Build();
 
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+   // Cấu hình middleware pipeline 
+   app.UseInfrastructure();
 
-    app.UseHttpsRedirection();
-
-    app.UseAuthorization();
-
-    app.MapControllers();
-
-    app.Run();
+   // Chạy ứng dụng
+   app.Run();
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Unhandled exception");
+   // Log lỗi nghiêm trọng nếu có
+   Log.Fatal(ex, "Unhandled exception");
 }
 finally
 {
-    Log.Information("Shut down Product API complete");
-    Log.CloseAndFlush();
+   // Log kết thúc và đảm bảo flush buffer
+   Log.Information("Shut down Product API complete");
+   Log.CloseAndFlush();
 }
