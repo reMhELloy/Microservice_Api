@@ -1,15 +1,24 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using MySqlConnector;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using Product.API.Persistence;
+using Contracts.Common.Interfaces;                 // Cho interfaces
+using Infrastructure.Common;                       // Cho implementations
+using Microsoft.EntityFrameworkCore;               // Cho DbContext
+using Microsoft.OpenApi.Models;                   // Cho OpenAPI/Swagger
+using MySqlConnector;                             // Cho MySQL connection
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure; // Cho MySQL provider
+using Product.API.Persistence;                    // Cho ProductContext
+using Product.API.Repositories.Interfaces;         // Cho IProductRepository  
+using Product.API.Repositories;                    // Cho ProductRepository
 
 namespace Product.API.Extensions;
 
+/// <summary>
+/// Static class chứa các extension methods để cấu hình services
+/// </summary>
 // Lớp static để mở rộng IServiceCollection 
 public static class ServiceExtensions
 {
-    // Extension method đăng ký các service cần thiết
+    /// <summary>
+    /// Extension method đăng ký các service cần thiết cho ứng dụng
+    /// </summary>
     // Thêm tham số IConfiguration để đọc cấu hình từ appsettings.json
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
@@ -33,12 +42,14 @@ public static class ServiceExtensions
             });
         });
 
-        // Cấu hình kết nối database
+        // Cấu hình database và các services
         services.ConfigureProductDbContext(configuration);
-
+        services.AddInfrastructureServices();
         return services;
     }
-
+    /// <summary>
+    /// Cấu hình DbContext cho MySQL
+    /// </summary>
     // Extension method riêng để cấu hình DbContext
     private static IServiceCollection ConfigureProductDbContext(this IServiceCollection services, IConfiguration configuration)
     {
@@ -64,4 +75,18 @@ public static class ServiceExtensions
 
         return services;
     }
+    /// <summary>
+    /// Đăng ký các services liên quan đến infrastructure
+    /// </summary>
+    private static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
+    {
+        return services
+            // Đăng ký generic repository base
+            .AddScoped(typeof(IRepositoryBaseAsync<,,>), typeof(RepositoryBaseAsyncAsync<,,>))
+            // Đăng ký unit of work
+            .AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>))
+            // Đăng ký product repository
+            .AddScoped<IProductRepository, ProductRepository>();
+    }
+
 }

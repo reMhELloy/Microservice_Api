@@ -1,9 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <!-- Cấu hình cơ bản cho project -->
+  <PropertyGroup>
+    <!-- Target .NET 6.0 -->
+    <TargetFramework>net6.0</TargetFramework>
 
-    <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
+    <!-- Cho phép sử dụng global using directives -->
+    <ImplicitUsings>enable</ImplicitUsings>
 
+    <!-- Bật nullable reference types -->
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- References tới các project khác trong solution -->
+  <ItemGroup>
+    <!-- Reference tới Contracts project -->
+    <ProjectReference Include="..\Contracts\Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
+      <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.27\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
