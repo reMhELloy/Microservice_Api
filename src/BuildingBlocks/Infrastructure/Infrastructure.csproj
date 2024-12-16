@@ -22,4 +22,7 @@
       <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.27\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+  </ItemGroup>
 </Project>

@@ -45,6 +45,7 @@ public static class ServiceExtensions
         // Cấu hình database và các services
         services.ConfigureProductDbContext(configuration);
         services.AddInfrastructureServices();
+        services.AddAutoMapper(cfg => cfg.AddProfile(new MappingProfile()));
         return services;
     }
     /// <summary>
