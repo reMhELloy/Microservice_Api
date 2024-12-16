@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
@@ -8,10 +8,33 @@
 
     <ItemGroup>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+      <!-- EntityFrameworkCore: Package chính để làm việc với database -->
+      <!-- Cung cấp các chức năng: DbContext, LINQ to Entities, Change Tracking, Migrations -->
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
+      <!-- EntityFrameworkCore.Design: Package công cụ thiết kế và migration -->
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.6">
+        <!-- PrivateAssets=all: Package này chỉ dùng lúc development, không deploy lên production -->
+        <PrivateAssets>all</PrivateAssets>
+        <!-- IncludeAssets: Xác định các loại tài nguyên sẽ được include từ package -->
+        <!-- runtime: Các file DLL cần khi chạy -->
+        <!-- build: Các file cần cho quá trình build -->
+        <!-- native: Các file native code -->
+        <!-- contentfiles: Các file nội dung -->
+        <!-- analyzers: Công cụ phân tích code -->
+        <!-- buildtransitive: Các file build cho các project phụ thuộc -->
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+      <!-- Swashbuckle.AspNetCore: Package để tạo và hiển thị tài liệu API với Swagger -->
+      <!-- Tự động tạo tài liệu API từ code -->
+      <!-- Cung cấp UI để test API trực tiếp trên browser -->
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj" />
+      <ProjectReference Include="..\..\BuildingBlocks\Contracts\Contracts.csproj" />
+      <ProjectReference Include="..\..\BuildingBlocks\Shared\Shared.csproj" />
     </ItemGroup>
 
 </Project>

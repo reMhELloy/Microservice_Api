@@ -15,7 +15,7 @@ public static class ApplicationExtensions
        // Thêm middleware routing để xử lý các request URL
        app.UseRouting();
 
-       // Chuyển hướng HTTP sang HTTPS (đã comment, chỉ dùng cho production)
+       // Chuyển hướng HTTP sang HTTPS (chỉ dùng cho production)
        // app.UseHttpsRedirection();
 
        // Thêm middleware xác thực/phân quyền
