@@ -1,4 +1,4 @@
-version: '3.8'
+﻿version: '3.8'
 
 services:
   #database section
@@ -105,3 +105,36 @@ services:
       - elasticsearch
     ports:
       - "5601:5601"
+
+  #microservices api sections
+  product.api:
+    # Đặt tên container khi chạy
+    container_name: product.api
+
+    # Cấu hình các biến môi trường cho container
+    environment:
+      # Thiết lập môi trường là Development
+      - ASPNETCORE_ENVIRONMENT=Development
+      # Cấu hình URL cho ứng dụng ASP.NET Core, '+' cho phép lắng nghe tất cả các IP addresses
+      - ASPNETCORE_URLS=http://+:80
+      # Connection string để kết nối MySQL database
+      - "ConnectionStrings:DefaultConnectionString=Server=productdb;Port=3306;Database=ProductDB;Uid=root;Pwd=Passw0rd!;"
+      # - Server=productdb: tên của container database (định nghĩa trong depends_on)
+      # - Port=3306: port mặc định của MySQL
+      # - Database=ProductDB: tên database
+      # - Uid=root: username
+      # - Pwd=Passw0rd!: password
+
+    # Định nghĩa phụ thuộc - service này cần đợi productdb khởi động trước
+    depends_on: 
+      - productdb
+
+    # Map port từ host vào container
+    ports:
+      - "6002:80"
+      # - "6002": port trên máy host
+      # - "80": port trong container
+
+    # Chính sách restart container
+    restart: always
+    # always: tự động restart container khi gặp lỗi hoặc server reboot

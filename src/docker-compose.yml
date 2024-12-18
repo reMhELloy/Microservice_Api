@@ -1,4 +1,4 @@
-version: '3.8'
+﻿version: '3.8'
 
 services:
   #database section
@@ -32,6 +32,17 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.17.2
+  #microservices api section
+  product.api: # Tên service trong docker compose
+    # Cấu hình image name theo format
+    image: ${DOCKER_REGISTRY-}product-api:${PLATFORM:-linux}-${TAG:-latest}
+    # ${DOCKER_REGISTRY-} : Registry để push/pull image, nếu không set thì để trống
+    # product-api : Tên của image
+    # ${PLATFORM:-linux} : Platform đang sử dụng, mặc định là linux nếu không set
+    # ${TAG:-latest} : Version tag của image, mặc định là latest nếu không set
+    build:
+      context: . # Build context là thư mục gốc (root) của project
+      dockerfile: Services/Product.API/Dockerfile # Đường dẫn tới Dockerfile của service
 
 #network section
 networks:
