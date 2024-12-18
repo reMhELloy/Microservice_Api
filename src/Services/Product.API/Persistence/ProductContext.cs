@@ -16,6 +16,18 @@ public class ProductContext : DbContext
     // Định nghĩa DbSet để thao tác với bảng Products trong database
     // CatalogProduct là entity class map với bảng trong database
     public DbSet<CatalogProduct> Products { get; set; }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Gọi phương thức của lớp cha để giữ lại các cấu hình mặc định
+        base.OnModelCreating(modelBuilder);
+
+        // Tạo unique index cho trường No trong bảng CatalogProduct
+        // - HasIndex: Định nghĩa index cho cột No
+        // - IsUnique: Đảm bảo giá trị No là duy nhất trong database
+        // => Không cho phép 2 sản phẩm có cùng Product No
+        modelBuilder.Entity<CatalogProduct>().HasIndex(x => x.No)
+            .IsUnique();
+    }
 
     // Override phương thức SaveChangesAsync để thêm custom logic trước khi lưu vào DB
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

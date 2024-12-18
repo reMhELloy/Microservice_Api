@@ -36,7 +36,7 @@ services:
 #network section
 networks:
   default:
-    name: tedu_microservices
+    name: GenZ_microservices
     driver: bridge
 
 #volumes section

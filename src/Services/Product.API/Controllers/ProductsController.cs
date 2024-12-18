@@ -92,6 +92,11 @@ public class ProductsController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
+        // Kiểm tra xem Product No đã tồn tại chưa
+        var productEntity = await _repository.GetProductByNo(productDto.No);
+        if (productEntity != null) 
+            return BadRequest($"Product No: {productDto.No} is existed.");
+
         // Convert từ DTO sang domain model
         var product = _mapper.Map<CatalogProduct>(productDto);
 

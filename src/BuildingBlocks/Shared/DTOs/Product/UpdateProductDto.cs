@@ -1,19 +1,12 @@
 ﻿namespace Shared.DTOs.Product;
 
 /// <summary>
-/// DTO dùng cho việc cập nhật sản phẩm
+/// DTO class để cập nhật thông tin sản phẩm, kế thừa từ CreateOrUpdateProductDto
 /// </summary>
-public class UpdateProductDto
+/// <param name="Name">Tên sản phẩm cần cập nhật</param>
+/// <param name="Summary">Tóm tắt sản phẩm cần cập nhật</param>  
+/// <param name="Description">Mô tả chi tiết cần cập nhật</param>
+/// <param name="Price">Giá sản phẩm cần cập nhật</param>
+public class UpdateProductDto : CreateOrUpdateProductDto
 {
-    // Tên sản phẩm cần cập nhật
-    public string Name { get; set; }
-
-    // Tóm tắt mới của sản phẩm
-    public string Summary { get; set; }
-
-    // Mô tả mới của sản phẩm
-    public string Description { get; set; }
-
-    // Giá mới của sản phẩm
-    public decimal Price { get; set; }
 }

@@ -1,22 +1,14 @@
-﻿namespace Shared.DTOs.Product;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Shared.DTOs.Product;
 
 /// <summary>
-/// DTO dùng cho việc tạo mới sản phẩm
+/// DTO class để tạo mới sản phẩm, kế thừa từ CreateOrUpdateProductDto
 /// </summary>
-public class CreateProductDto
+/// <param name="No">Mã sản phẩm, bắt buộc và phải là duy nhất</param>
+public class CreateProductDto : CreateOrUpdateProductDto
 {
-    // Mã sản phẩm
+    // Mã sản phẩm - required, unique
+    [Required]
     public string No { get; set; }
-
-    // Tên sản phẩm 
-    public string Name { get; set; }
-
-    // Tóm tắt về sản phẩm
-    public string Summary { get; set; }
-
-    // Mô tả chi tiết sản phẩm
-    public string Description { get; set; }
-
-    // Giá sản phẩm
-    public decimal Price { get; set; }
 }
